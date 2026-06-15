@@ -1,21 +1,6 @@
-﻿SELECT TABLE_NAME
-FROM information_schema.tables
-WHERE table_schema = 'public' AND table_type = 'BASE TABLE'
-ORDER BY TABLE_NAME;
-SELECT current_database();
-SELECT current_schema();
-SELECT CURRENT_USER;
--- General Students Overall 980484
-SELECT COUNT(*) FROM enrollment1 WHERE item_group = 1 AND item_id =1;
--- OBC Students Overall 1231036
-SELECT COUNT(*) FROM enrollment1 WHERE item_group = 1 AND item_id =4;
--- SC Students Overall 1104344
-SELECT COUNT(*) FROM enrollment1 WHERE item_group = 1 AND item_id =2;
--- ST Students Overall 748884
-SELECT COUNT(*) FROM enrollment1 WHERE item_group = 1 AND item_id =3;
+﻿
 
--- TOTAL BLIND STUDENTS 25615
-SELECT COUNT(*) FROM enrollment1 WHERE item_group = 4 AND item_id =1;
+-- Gender Parity Index
 
 WITH gpi AS (
 SELECT
@@ -37,13 +22,7 @@ WHERE item_group = 1
 -- Overall Gender Parity Index (GPI)
 SELECT ROUND(total_girls::NUMERIC / NULLIF(total_boys,0),3),' :1' FROM gpi;
 
-WITH c1_gpi AS(
-	SELECT SUM(c1_g) AS CLASS1_girls, SUM(c1_b) AS CLASS1_boys FROM enrollment1 WHERE item_group = 1
-)
-
-SELECT ROUND(CLASS1_girls::NUMERIC / NULLIF(CLASS1_boys,0),3),' :1'
- FROM c1_gpi;
-
+-- Class wise GPI
 
 WITH class_gpi AS (
     SELECT
