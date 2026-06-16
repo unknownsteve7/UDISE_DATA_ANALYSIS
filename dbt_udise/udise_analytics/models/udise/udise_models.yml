@@ -1,0 +1,34 @@
+version: 2
+
+models:
+
+    
+  - name: girls_retention_vs_infra
+    description: "Analyzes Class 8 to Class 9 girls transition/retention rates grouped by school infrastructure availability (functional girls toilets and functional electricity)."
+
+  - name: ptr_and_teacher_allocation
+    description: "Computes the Pupil-Teacher Ratio (PTR) for schools and flags their staffing status (e.g., Under-staffed, Well-staffed) based on national RTE guidelines."
+
+  - name: infra_score_vs_enrollment
+    description: "Builds a composite Infrastructure Score (0-7) for each school based on key basic facilities and correlates it with student enrollment sizes."
+
+  - name: regional_social_disparities
+    description: "Aggregates total student enrollment by regional locality (Rural vs Urban), gender, and social category (General, SC, ST, OBC)."
+
+  - name: socio_economic_and_health_proxies
+    description: "Extracts BPL and EWS enrollments and maps them along with state-level child anemia percentages from NFHS-5 survey statistics."
+
+  - name: school_management_and_facility_impact
+    description: "Compares girls enrollment shares across different school management types (Government, Private Aided, Private Unaided) and facility access (libraries, digital smart TVs)."
+
+  - name: girls_retention_aspirational_districts
+    description: "Focuses on rural school networks to calculate Gender Parity Index (GPI) and flag districts with significant gender disparities in early secondary education."
+
+  - name: transition_bottlenecks
+    description: "Measures transition rates at key school progression points: Upper Primary to Secondary (Class 8 -> 9) and Secondary to Sr. Secondary (Class 10 -> 11)."
+
+  - name: cwsn_enrolment_disability
+    description: "Provides a detailed disaggregated breakdown of Children with Special Needs (CWSN) enrollment by 21 recognized disability types."
+
+  - name: age_grade_distortion
+    description: "Evaluates early grade age distortion in Class 1 by identifying underage, normal-age, and overage student enrollments across schools."
