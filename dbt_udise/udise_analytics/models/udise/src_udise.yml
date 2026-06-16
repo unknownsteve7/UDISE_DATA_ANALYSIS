@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: public
+    database: udise
+    schema: public
+    tables:
+      - name: enrollment1
+      - name: enrollment2
+      - name: facilities
+      - name: profile1
+      - name: profile2
+      - name: teachers
+
