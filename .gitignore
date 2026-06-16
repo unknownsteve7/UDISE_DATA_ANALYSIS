@@ -6,3 +6,4 @@ data/2024-25_parquet/
 powerbi_exports/
 UDISE Education Dataset/
 Schema and Participant Brief/
+dbt_udise/venv/
