@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: student_progression_funnel
+    description: "Milestone-wise student progression from pre-primary to higher secondary."
+
+    columns:
+      - name: pre_primary
+        description: "Total enrollment in pre-primary (CPP)."
+
+      - name: primary_entry
+        description: "Total enrollment in Class 1."
+
+      - name: primary_exit
+        description: "Total enrollment in Class 5."
+
+      - name: upper_primary_exit
+        description: "Total enrollment in Class 8."
+
+      - name: secondary_exit
+        description: "Total enrollment in Class 10."
+
+      - name: higher_secondary_exit
+        description: "Total enrollment in Class 12."
