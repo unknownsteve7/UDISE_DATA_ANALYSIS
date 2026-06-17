@@ -1,6 +1,7 @@
 version: 2
 
 sources:
+  # 2023-24 Academic Year
   - name: public
     database: udise
     schema: public
@@ -12,3 +13,14 @@ sources:
       - name: profile2
       - name: teachers
 
+  # 2024-25 Academic Year
+  - name: public_2425
+    database: udise
+    schema: public
+    tables:
+      - name: enrollment1_2425
+      - name: enrollment2_2425
+      - name: facilities_2425
+      - name: profile1_2425
+      - name: profile2_2425
+      - name: teachers_2425
