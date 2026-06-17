@@ -5,401 +5,91 @@ models:
   - name: girls_retention_vs_infra
     description: "Analyzes Class 8 to Class 9 girls transition/retention rates grouped by school infrastructure availability (functional girls toilets and functional electricity)."
     columns:
-      - name: state_name
+      - name: state
         description: "Name of the state"
         tests:
           - not_null
-          - accepted_values:
-              values: ["Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal", "Andaman and Nicobar Islands", "Chandigarh", "Dadra and Nagar Haveli and Daman and Diu", "Delhi", "Jammu and Kashmir", "Ladakh", "Lakshadweep", "Puducherry"]
-      - name: district_name
+      - name: district
         description: "Name of the district"
-        tests:
-          - not_null
-      - name: school_name
-        description: "Name of the school"
-        tests:
-          - not_null
-      - name: girls_enrol_class8
-        description: "Number of girls enrolled in class 8"
-        tests:
-          - not_null
-      - name: girls_enrol_class9
-        description: "Number of girls enrolled in class 9"
-        tests:
-          - not_null
-      - name: total_enrol_class8
-        description: "Total number of students enrolled in class 8"
-        tests:
-          - not_null
-      - name: total_enrol_class9
-        description: "Total number of students enrolled in class 9"
-        tests:
-          - not_null
-      - name: girls_retention_rate_class8_9
-        description: "Retention rate of girls from class 8 to class 9"
-        tests:
-          - not_null
-      - name: girls_toilet_available
-        description: "Whether girls toilet is available (1 if available, 0 if not)"
-        tests:
-          - not_null
-          - accepted_values:
-              values: [0, 1]
-      - name: electricity_available
-        description: "Whether electricity is available (1 if available, 0 if not)"
-        tests:
-          - not_null
-          - accepted_values:
-              values: [0, 1]
-      - name: infra_score
-        description: "Infrastructure score based on availability of girls toilet and electricity"
         tests:
           - not_null
 
   - name: ptr_and_teacher_allocation
     description: "Computes the Pupil-Teacher Ratio (PTR) for schools and flags their staffing status (e.g., Under-staffed, Well-staffed) based on national RTE guidelines."
     columns:
-      - name: state_name
+      - name: state
         description: "Name of the state"
         tests:
           - not_null
-          - accepted_values:
-              values: ["Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal", "Andaman and Nicobar Islands", "Chandigarh", "Dadra and Nagar Haveli and Daman and Diu", "Delhi", "Jammu and Kashmir", "Ladakh", "Lakshadweep", "Puducherry"]
-      - name: district_name
+      - name: district
         description: "Name of the district"
         tests:
           - not_null
-      - name: school_name
-        description: "Name of the school"
-        tests:
-          - not_null
-      - name: total_enrol_class8
-        description: "Total number of students enrolled in class 8"
-        tests:
-          - not_null
-      - name: total_enrol_class9
-        description: "Total number of students enrolled in class 9"
-        tests:
-          - not_null
-      - name: total_teachers_all_classes
-        description: "Total number of teachers in the school"
-        tests:
-          - not_null
-      - name: girls_retention_rate_class8_9
-        description: "Retention rate of girls from class 8 to class 9"
-        tests:
-          - not_null
-      - name: ptr_class8_9
-        description: "Pupil-Teacher Ratio for class 8 to class 9"
-        tests:
-          - not_null
-      - name: staffing_status
-        description: "Staffing status based on PTR"
-        tests:
-          - not_null
-          - accepted_values:
-              values: ["Under-staffed", "Well-staffed", "Over-staffed"]
 
   - name: infra_score_vs_enrollment
     description: "Builds a composite Infrastructure Score (0-7) for each school based on key basic facilities and correlates it with student enrollment sizes."
     columns:
-      - name: state_name
+      - name: state
         description: "Name of the state"
-        tests:
-          - not_null
-          - accepted_values:
-              values: ["Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal", "Andaman and Nicobar Islands", "Chandigarh", "Dadra and Nagar Haveli and Daman and Diu", "Delhi", "Jammu and Kashmir", "Ladakh", "Lakshadweep", "Puducherry"]
-      - name: district_name
-        description: "Name of the district"
-        tests:
-          - not_null
-      - name: school_name
-        description: "Name of the school"
-        tests:
-          - not_null
-      - name: total_enrol_class8
-        description: "Total number of students enrolled in class 8"
-        tests:
-          - not_null
-      - name: total_enrol_class9
-        description: "Total number of students enrolled in class 9"
-        tests:
-          - not_null
-      - name: girls_retention_rate_class8_9
-        description: "Retention rate of girls from class 8 to class 9"
-        tests:
-          - not_null
-      - name: infra_score
-        description: "Infrastructure score based on availability of girls toilet and electricity"
-        tests:
-          - not_null
-      - name: total_students_all_classes
-        description: "Total number of students enrolled in all classes"
         tests:
           - not_null
 
   - name: regional_social_disparities
     description: "Aggregates total student enrollment by regional locality (Rural vs Urban), gender, and social category (General, SC, ST, OBC)."
     columns:
-      - name: state_name
+      - name: state
         description: "Name of the state"
-        tests:
-          - not_null
-          - accepted_values:
-              values: ["Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal", "Andaman and Nicobar Islands", "Chandigarh", "Dadra and Nagar Haveli and Daman and Diu", "Delhi", "Jammu and Kashmir", "Ladakh", "Lakshadweep", "Puducherry"]
-      - name: district_name
-        description: "Name of the district"
-        tests:
-          - not_null
-      - name: school_name
-        description: "Name of the school"
-        tests:
-          - not_null
-      - name: total_enrol_class8
-        description: "Total number of students enrolled in class 8"
-        tests:
-          - not_null
-      - name: total_enrol_class9
-        description: "Total number of students enrolled in class 9"
-        tests:
-          - not_null
-      - name: girls_retention_rate_class8_9
-        description: "Retention rate of girls from class 8 to class 9"
-        tests:
-          - not_null
-      - name: infra_score
-        description: "Infrastructure score based on availability of girls toilet and electricity"
-        tests:
-          - not_null
-      - name: total_students_all_classes
-        description: "Total number of students enrolled in all classes"
-        tests:
-          - not_null
 
   - name: socio_economic_and_health_proxies
     description: "Extracts BPL and EWS enrollments and maps them along with state-level child anemia percentages from NFHS-5 survey statistics."
     columns:
-      - name: state_name
+      - name: state
         description: "Name of the state"
-        tests:
-          - not_null
-          - accepted_values:
-              values: ["Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal", "Andaman and Nicobar Islands", "Chandigarh", "Dadra and Nagar Haveli and Daman and Diu", "Delhi", "Jammu and Kashmir", "Ladakh", "Lakshadweep", "Puducherry"]
-      - name: district_name
-        description: "Name of the district"
-        tests:
-          - not_null
-      - name: school_name
-        description: "Name of the school"
-        tests:
-          - not_null
-      - name: total_enrol_class8
-        description: "Total number of students enrolled in class 8"
-        tests:
-          - not_null
-      - name: total_enrol_class9
-        description: "Total number of students enrolled in class 9"
-        tests:
-          - not_null
-      - name: girls_retention_rate_class8_9
-        description: "Retention rate of girls from class 8 to class 9"
-        tests:
-          - not_null
-      - name: infra_score
-        description: "Infrastructure score based on availability of girls toilet and electricity"
-        tests:
-          - not_null
-      - name: total_students_all_classes
-        description: "Total number of students enrolled in all classes"
-        tests:
-          - not_null
 
   - name: school_management_and_facility_impact
     description: "Compares girls enrollment shares across different school management types (Government, Private Aided, Private Unaided) and facility access (libraries, digital smart TVs)."
     columns:
-      - name: state_name
+      - name: state
         description: "Name of the state"
-        tests:
-          - not_null
-          - accepted_values:
-              values: ["Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal", "Andaman and Nicobar Islands", "Chandigarh", "Dadra and Nagar Haveli and Daman and Diu", "Delhi", "Jammu and Kashmir", "Ladakh", "Lakshadweep", "Puducherry"]
-      - name: district_name
-        description: "Name of the district"
-        tests:
-          - not_null
-      - name: school_name
-        description: "Name of the school"
-        tests:
-          - not_null
-      - name: total_enrol_class8
-        description: "Total number of students enrolled in class 8"
-        tests:
-          - not_null
-      - name: total_enrol_class9
-        description: "Total number of students enrolled in class 9"
-        tests:
-          - not_null
-      - name: girls_retention_rate_class8_9
-        description: "Retention rate of girls from class 8 to class 9"
-        tests:
-          - not_null
-      - name: infra_score
-        description: "Infrastructure score based on availability of girls toilet and electricity"
-        tests:
-          - not_null
-      - name: total_students_all_classes
-        description: "Total number of students enrolled in all classes"
-        tests:
-          - not_null
 
   - name: girls_retention_aspirational_districts
     description: "Focuses on rural school networks to calculate Gender Parity Index (GPI) and flag districts with significant gender disparities in early secondary education."
-    columns:
-      - name: state_name
-        description: "Name of the state"
-        tests:
-          - not_null
-          - accepted_values:
-              values: ["Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal", "Andaman and Nicobar Islands", "Chandigarh", "Dadra and Nagar Haveli and Daman and Diu", "Delhi", "Jammu and Kashmir", "Ladakh", "Lakshadweep", "Puducherry"]
-      - name: district_name
-        description: "Name of the district"
-        tests:
-          - not_null
-      - name: school_name
-        description: "Name of the school"
-        tests:
-          - not_null
-      - name: total_enrol_class8
-        description: "Total number of students enrolled in class 8"
-        tests:
-          - not_null
-      - name: total_enrol_class9
-        description: "Total number of students enrolled in class 9"
-        tests:
-          - not_null
-      - name: girls_retention_rate_class8_9
-        description: "Retention rate of girls from class 8 to class 9"
-        tests:
-          - not_null
-      - name: infra_score
-        description: "Infrastructure score based on availability of girls toilet and electricity"
-        tests:
-          - not_null
-      - name: total_students_all_classes
-        description: "Total number of students enrolled in all classes"
-        tests:
-          - not_null
 
   - name: transition_bottlenecks
     description: "Measures transition rates at key school progression points: Upper Primary to Secondary (Class 8 -> 9) and Secondary to Sr. Secondary (Class 10 -> 11)."
-    columns:
-      - name: state_name
-        description: "Name of the state"
-        tests:
-          - not_null
-          - accepted_values:
-              values: ["Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal", "Andaman and Nicobar Islands", "Chandigarh", "Dadra and Nagar Haveli and Daman and Diu", "Delhi", "Jammu and Kashmir", "Ladakh", "Lakshadweep", "Puducherry"]
-      - name: district_name
-        description: "Name of the district"
-        tests:
-          - not_null
-      - name: school_name
-        description: "Name of the school"
-        tests:
-          - not_null
-      - name: total_enrol_class8
-        description: "Total number of students enrolled in class 8"
-        tests:
-          - not_null
-      - name: total_enrol_class9
-        description: "Total number of students enrolled in class 9"
-        tests:
-          - not_null
-      - name: girls_retention_rate_class8_9
-        description: "Retention rate of girls from class 8 to class 9"
-        tests:
-          - not_null
-      - name: infra_score
-        description: "Infrastructure score based on availability of girls toilet and electricity"
-        tests:
-          - not_null
-      - name: total_students_all_classes
-        description: "Total number of students enrolled in all classes"
-        tests:
-          - not_null
 
   - name: cwsn_enrolment_disability
     description: "Provides a detailed disaggregated breakdown of Children with Special Needs (CWSN) enrollment by 21 recognized disability types."
-    columns:
-      - name: state_name
-        description: "Name of the state"
-        tests:
-          - not_null
-          - accepted_values:
-              values: ["Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal", "Andaman and Nicobar Islands", "Chandigarh", "Dadra and Nagar Haveli and Daman and Diu", "Delhi", "Jammu and Kashmir", "Ladakh", "Lakshadweep", "Puducherry"]
-      - name: district_name
-        description: "Name of the district"
-        tests:
-          - not_null
-      - name: school_name
-        description: "Name of the school"
-        tests:
-          - not_null
-      - name: total_enrol_class8
-        description: "Total number of students enrolled in class 8"
-        tests:
-          - not_null
-      - name: total_enrol_class9
-        description: "Total number of students enrolled in class 9"
-        tests:
-          - not_null
-      - name: girls_retention_rate_class8_9
-        description: "Retention rate of girls from class 8 to class 9"
-        tests:
-          - not_null
-      - name: infra_score
-        description: "Infrastructure score based on availability of girls toilet and electricity"
-        tests:
-          - not_null
-      - name: total_students_all_classes
-        description: "Total number of students enrolled in all classes"
-        tests:
-          - not_null
 
   - name: age_grade_distortion
     description: "Evaluates early grade age distortion in Class 1 by identifying underage, normal-age, and overage student enrollments across schools."
-    columns:
-      - name: state_name
-        description: "Name of the state"
-        tests:
-          - not_null
-          - accepted_values:
-              values: ["Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal", "Andaman and Nicobar Islands", "Chandigarh", "Dadra and Nagar Haveli and Daman and Diu", "Delhi", "Jammu and Kashmir", "Ladakh", "Lakshadweep", "Puducherry"]
-      - name: district_name
-        description: "Name of the district"
-        tests:
-          - not_null
-      - name: school_name
-        description: "Name of the school"
-        tests:
-          - not_null
-      - name: total_enrol_class8
-        description: "Total number of students enrolled in class 8"
-        tests:
-          - not_null
-      - name: total_enrol_class9
-        description: "Total number of students enrolled in class 9"
-        tests:
-          - not_null
-      - name: girls_retention_rate_class8_9
-        description: "Retention rate of girls from class 8 to class 9"
-        tests:
-          - not_null
-      - name: infra_score
-        description: "Infrastructure score based on availability of girls toilet and electricity"
-        tests:
-          - not_null
-      - name: total_students_all_classes
-        description: "Total number of students enrolled in all classes"
-        tests:
-          - not_null
+
+  - name: yoy_girls_retention_vs_infra
+    description: "Year-on-Year comparison of Girls Retention vs Infrastructure."
+
+  - name: yoy_ptr_and_teacher_allocation
+    description: "Year-on-Year comparison of PTR and Teacher Allocation."
+
+  - name: yoy_infra_score_vs_enrollment
+    description: "Year-on-Year comparison of Infrastructure Score vs Enrollment."
+
+  - name: yoy_regional_social_disparities
+    description: "Year-on-Year comparison of Regional and Social Disparities."
+
+  - name: yoy_socio_economic_and_health_proxies
+    description: "Year-on-Year comparison of Socio-Economic and Health Proxies."
+
+  - name: yoy_school_management_and_facility_impact
+    description: "Year-on-Year comparison of School Management and Facility Impact."
+
+  - name: yoy_girls_retention_aspirational_districts
+    description: "Year-on-Year comparison of Girls Retention in Aspirational Districts."
+
+  - name: yoy_transition_bottlenecks
+    description: "Year-on-Year comparison of Transition Bottlenecks."
+
+  - name: yoy_cwsn_enrolment_disability
+    description: "Year-on-Year comparison of CWSN Enrolment by Disability Type."
+
+  - name: yoy_age_grade_distortion
+    description: "Year-on-Year comparison of Age-Grade Distortion."
