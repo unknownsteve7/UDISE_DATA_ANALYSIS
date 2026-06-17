@@ -7,22 +7,21 @@ WITH infra_2324 AS (
     SELECT
         p.state, p.district, p.school_category, p.managment, p.rural_urban,
         COUNT(DISTINCT p.pseudocode) AS school_count,
-        -- 7-point composite infrastructure score
         SUM(CASE WHEN f.electricity_availability = 1 THEN 1 ELSE 0 END)             AS schools_electricity,
         SUM(CASE WHEN f.total_girls_func_toilet > 0 THEN 1 ELSE 0 END)              AS schools_girls_toilet,
         SUM(CASE WHEN f.total_boys_func_toilet > 0 THEN 1 ELSE 0 END)               AS schools_boys_toilet,
         SUM(CASE WHEN f.library_availability = 1 THEN 1 ELSE 0 END)                 AS schools_library,
-        SUM(CASE WHEN f.playground_availability = 1 THEN 1 ELSE 0 END)              AS schools_playground,
-        SUM(CASE WHEN f.internet_availability = 1 THEN 1 ELSE 0 END)                AS schools_internet,
-        SUM(CASE WHEN f.computer_lab_availability = 1 THEN 1 ELSE 0 END)            AS schools_computer_lab,
+        SUM(CASE WHEN f.playground_available = 1 THEN 1 ELSE 0 END)                 AS schools_playground,
+        SUM(CASE WHEN f.internet = 1 THEN 1 ELSE 0 END)                             AS schools_internet,
+        SUM(CASE WHEN f.comp_ict_lab_yn = 1 THEN 1 ELSE 0 END)                      AS schools_computer_lab,
         ROUND(AVG(
             (CASE WHEN f.electricity_availability = 1 THEN 1 ELSE 0 END) +
             (CASE WHEN f.total_girls_func_toilet > 0 THEN 1 ELSE 0 END) +
             (CASE WHEN f.total_boys_func_toilet > 0 THEN 1 ELSE 0 END) +
             (CASE WHEN f.library_availability = 1 THEN 1 ELSE 0 END) +
-            (CASE WHEN f.playground_availability = 1 THEN 1 ELSE 0 END) +
-            (CASE WHEN f.internet_availability = 1 THEN 1 ELSE 0 END) +
-            (CASE WHEN f.computer_lab_availability = 1 THEN 1 ELSE 0 END)
+            (CASE WHEN f.playground_available = 1 THEN 1 ELSE 0 END) +
+            (CASE WHEN f.internet = 1 THEN 1 ELSE 0 END) +
+            (CASE WHEN f.comp_ict_lab_yn = 1 THEN 1 ELSE 0 END)
         )::numeric, 2) AS avg_infra_score,
         SUM(e.total_enrollment) AS total_enrollment,
         '2023-24' AS academic_year
@@ -47,17 +46,17 @@ infra_2425 AS (
         SUM(CASE WHEN f.total_girls_func_toilet > 0 THEN 1 ELSE 0 END)              AS schools_girls_toilet,
         SUM(CASE WHEN f.total_boys_func_toilet > 0 THEN 1 ELSE 0 END)               AS schools_boys_toilet,
         SUM(CASE WHEN f.library_availability = 1 THEN 1 ELSE 0 END)                 AS schools_library,
-        SUM(CASE WHEN f.playground_availability = 1 THEN 1 ELSE 0 END)              AS schools_playground,
-        SUM(CASE WHEN f.internet_availability = 1 THEN 1 ELSE 0 END)                AS schools_internet,
-        SUM(CASE WHEN f.computer_lab_availability = 1 THEN 1 ELSE 0 END)            AS schools_computer_lab,
+        SUM(CASE WHEN f.playground_available = 1 THEN 1 ELSE 0 END)                 AS schools_playground,
+        SUM(CASE WHEN f.internet = 1 THEN 1 ELSE 0 END)                             AS schools_internet,
+        SUM(CASE WHEN f.comp_ict_lab_yn = 1 THEN 1 ELSE 0 END)                      AS schools_computer_lab,
         ROUND(AVG(
             (CASE WHEN f.electricity_availability = 1 THEN 1 ELSE 0 END) +
             (CASE WHEN f.total_girls_func_toilet > 0 THEN 1 ELSE 0 END) +
             (CASE WHEN f.total_boys_func_toilet > 0 THEN 1 ELSE 0 END) +
             (CASE WHEN f.library_availability = 1 THEN 1 ELSE 0 END) +
-            (CASE WHEN f.playground_availability = 1 THEN 1 ELSE 0 END) +
-            (CASE WHEN f.internet_availability = 1 THEN 1 ELSE 0 END) +
-            (CASE WHEN f.computer_lab_availability = 1 THEN 1 ELSE 0 END)
+            (CASE WHEN f.playground_available = 1 THEN 1 ELSE 0 END) +
+            (CASE WHEN f.internet = 1 THEN 1 ELSE 0 END) +
+            (CASE WHEN f.comp_ict_lab_yn = 1 THEN 1 ELSE 0 END)
         )::numeric, 2) AS avg_infra_score,
         SUM(e.total_enrollment) AS total_enrollment,
         '2024-25' AS academic_year

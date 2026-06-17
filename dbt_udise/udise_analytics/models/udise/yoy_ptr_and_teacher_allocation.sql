@@ -11,22 +11,22 @@ WITH year_2324 AS (
         p.managment,
         p.rural_urban,
         COUNT(DISTINCT p.pseudocode)                          AS school_count,
-        SUM(t.total_teachers)                                 AS total_teachers,
-        SUM(t.total_female_teachers)                          AS total_female_teachers,
+        SUM(t.total_tch)                                      AS total_teachers,
+        SUM(t.female)                                         AS total_female_teachers,
         SUM(e.total_enrollment)                               AS total_students,
         CASE
-            WHEN SUM(t.total_teachers) > 0
-            THEN ROUND(SUM(e.total_enrollment)::numeric / SUM(t.total_teachers)::numeric, 2)
+            WHEN SUM(t.total_tch) > 0
+            THEN ROUND(SUM(e.total_enrollment)::numeric / SUM(t.total_tch)::numeric, 2)
             ELSE NULL
         END AS avg_ptr,
-        ROUND(SUM(t.total_female_teachers)::numeric / NULLIF(SUM(t.total_teachers), 0) * 100, 2) AS female_teacher_pct,
-        SUM(CASE WHEN t.total_teachers = 0 THEN 1 ELSE 0 END) AS schools_no_teachers,
+        ROUND(SUM(t.female)::numeric / NULLIF(SUM(t.total_tch), 0) * 100, 2) AS female_teacher_pct,
+        SUM(CASE WHEN t.total_tch = 0 THEN 1 ELSE 0 END) AS schools_no_teachers,
         '2023-24' AS academic_year
     FROM {{ source('public', 'profile1') }} p
     JOIN (
         SELECT pseudocode,
-               SUM(total_teachers) AS total_teachers,
-               SUM(female_teachers) AS total_female_teachers
+               SUM(COALESCE(total_tch, 0)) AS total_tch,
+               SUM(COALESCE(female, 0)) AS female
         FROM {{ source('public', 'teachers') }}
         GROUP BY pseudocode
     ) t ON p.pseudocode = t.pseudocode
@@ -50,22 +50,22 @@ year_2425 AS (
         p.managment,
         p.rural_urban,
         COUNT(DISTINCT p.pseudocode)                          AS school_count,
-        SUM(t.total_teachers)                                 AS total_teachers,
-        SUM(t.total_female_teachers)                          AS total_female_teachers,
+        SUM(t.total_tch)                                      AS total_teachers,
+        SUM(t.female)                                         AS total_female_teachers,
         SUM(e.total_enrollment)                               AS total_students,
         CASE
-            WHEN SUM(t.total_teachers) > 0
-            THEN ROUND(SUM(e.total_enrollment)::numeric / SUM(t.total_teachers)::numeric, 2)
+            WHEN SUM(t.total_tch) > 0
+            THEN ROUND(SUM(e.total_enrollment)::numeric / SUM(t.total_tch)::numeric, 2)
             ELSE NULL
         END AS avg_ptr,
-        ROUND(SUM(t.total_female_teachers)::numeric / NULLIF(SUM(t.total_teachers), 0) * 100, 2) AS female_teacher_pct,
-        SUM(CASE WHEN t.total_teachers = 0 THEN 1 ELSE 0 END) AS schools_no_teachers,
+        ROUND(SUM(t.female)::numeric / NULLIF(SUM(t.total_tch), 0) * 100, 2) AS female_teacher_pct,
+        SUM(CASE WHEN t.total_tch = 0 THEN 1 ELSE 0 END) AS schools_no_teachers,
         '2024-25' AS academic_year
     FROM {{ source('public_2425', 'profile1_2425') }} p
     JOIN (
         SELECT pseudocode,
-               SUM(total_teachers) AS total_teachers,
-               SUM(female_teachers) AS total_female_teachers
+               SUM(COALESCE(total_tch, 0)) AS total_tch,
+               SUM(COALESCE(female, 0)) AS female
         FROM {{ source('public_2425', 'teachers_2425') }}
         GROUP BY pseudocode
     ) t ON p.pseudocode = t.pseudocode
