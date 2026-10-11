@@ -27,10 +27,9 @@ WITH cwsn_enrolment AS (
             WHEN item_id = 21 THEN 'Parkinson''s Disease'
             ELSE 'Other CWSN'
         END AS disability_type,
-        -- Total boys and girls CWSN enrolled
-        (cpp_b + c1_b + c2_b + c3_b + c4_b + c5_b + c6_b + c7_b + c8_b + c9_b + c10_b + c11_b + c12_b) AS boys_cwsn,
-        (cpp_g + c1_g + c2_g + c3_g + c4_g + c5_g + c6_g + c7_g + c8_g + c9_g + c10_g + c11_g + c12_g) AS girls_cwsn
-    FROM {{ source('public', 'enrollment1') }}
+        total_boys AS boys_cwsn,
+        total_girls AS girls_cwsn
+    FROM {{ ref('stg_enrollment1') }}
     WHERE item_group = 4
 ),
 
@@ -40,7 +39,7 @@ school_profile AS (
         state,
         district,
         block
-    FROM {{ source('public', 'profile1') }}
+    FROM {{ ref('stg_profile1') }}
 )
 
 SELECT

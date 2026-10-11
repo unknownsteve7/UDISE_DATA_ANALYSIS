@@ -10,9 +10,10 @@ spark = SparkSession.builder \
     .config("spark.executor.memory", "4g") \
     .getOrCreate()
 
-# Base directories
-source_dir = r"c:\Users\nagam\Final_Projects\UDISE\data\2023-24"
-target_dir = r"c:\Users\nagam\Final_Projects\UDISE\data\2023-24_parquet"
+# Base directories (dynamically resolved relative to repository root)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+source_dir = os.path.join(BASE_DIR, "data", "2023-24")
+target_dir = os.path.join(BASE_DIR, "data", "2023-24_parquet")
 
 # List of files to convert
 files_to_convert = [

@@ -1,0 +1,282 @@
+version: 2
+
+models:
+  # =========================================================================
+  # Policy Marts (Baseline 2023-24)
+  # =========================================================================
+  - name: girls_retention_vs_infra
+    description: "Class 8 to 9 girls transition rates grouped by school infrastructure availability (functional girls toilets and electricity)."
+    columns:
+      - name: state
+        description: "Name of the state or UT"
+        tests:
+          - not_null
+      - name: district
+        description: "Name of the district"
+        tests:
+          - not_null
+      - name: pseudocode
+        description: "Unique school identifier"
+        tests:
+          - not_null
+
+  - name: ptr_and_teacher_allocation
+    description: "Pupil-Teacher Ratio (PTR) and staffing compliance based on national RTE guidelines."
+    columns:
+      - name: state
+        description: "Name of the state or UT"
+        tests:
+          - not_null
+      - name: district
+        description: "Name of the district"
+        tests:
+          - not_null
+      - name: staffing_status
+        description: "Categorization against RTE norms (Well-staffed, Under-staffed, No Teachers)"
+        tests:
+          - not_null
+
+  - name: infra_score_vs_enrollment
+    description: "Composite 7-point infrastructure score and total enrollment per school."
+    columns:
+      - name: state
+        description: "Name of the state or UT"
+        tests:
+          - not_null
+      - name: pseudocode
+        description: "Unique school identifier"
+        tests:
+          - not_null
+      - name: infra_score
+        description: "0 to 7 composite infrastructure score"
+        tests:
+          - not_null
+
+  - name: regional_social_disparities
+    description: "Enrollment breakdown across rural vs urban areas and social categories (General, SC, ST, OBC)."
+    columns:
+      - name: state
+        description: "Name of the state or UT"
+        tests:
+          - not_null
+      - name: rural_urban_label
+        description: "Rural or Urban location"
+        tests:
+          - not_null
+      - name: social_category
+        description: "General, SC, ST, OBC"
+        tests:
+          - not_null
+
+  - name: socio_economic_and_health_proxies
+    description: "BPL and EWS enrollment shares linked with NFHS-5 child anemia rates."
+    columns:
+      - name: state
+        description: "Name of the state or UT"
+        tests:
+          - not_null
+      - name: pseudocode
+        description: "Unique school identifier"
+        tests:
+          - not_null
+
+  - name: school_management_and_facility_impact
+    description: "Girls enrollment shares across school management types (Government, Private Aided, Private Unaided)."
+    columns:
+      - name: state
+        description: "Name of the state or UT"
+        tests:
+          - not_null
+      - name: management_type
+        description: "Government, Private Aided, Private Unaided, Other"
+        tests:
+          - not_null
+
+  - name: girls_retention_aspirational_districts
+    description: "Rural school Gender Parity Index (GPI) and flags for districts with critical parity gaps (<0.95)."
+    columns:
+      - name: state
+        description: "Name of the state or UT"
+        tests:
+          - not_null
+      - name: district
+        description: "Name of the district"
+        tests:
+          - not_null
+
+  - name: transition_bottlenecks
+    description: "Cohort transition rates at Upper Primary -> Secondary (Class 8 -> 9) and Secondary -> Sr Secondary (Class 10 -> 11)."
+    columns:
+      - name: state
+        description: "Name of the state or UT"
+        tests:
+          - not_null
+      - name: pseudocode
+        description: "Unique school identifier"
+        tests:
+          - not_null
+
+  - name: cwsn_enrolment_disability
+    description: "Children with Special Needs (CWSN) disaggregated across 21 RPwD Act disability classifications."
+    columns:
+      - name: state
+        description: "Name of the state or UT"
+        tests:
+          - not_null
+      - name: disability_type
+        description: "Disability classification name"
+        tests:
+          - not_null
+
+  - name: age_grade_distortion
+    description: "Class 1 age-grade distortion identifying underage (<5), normal-age (5-6), and overage (>6) students."
+    columns:
+      - name: state
+        description: "Name of the state or UT"
+        tests:
+          - not_null
+      - name: pseudocode
+        description: "Unique school identifier"
+        tests:
+          - not_null
+
+  - name: student_progression_funnel
+    description: "Macro progression funnel from Pre-Primary to Class 12."
+    columns:
+      - name: primary_entry
+        description: "Class 1 total students"
+        tests:
+          - not_null
+
+  # =========================================================================
+  # Year-on-Year Comparative Marts (2023-24 vs 2024-25)
+  # =========================================================================
+  - name: yoy_girls_retention_vs_infra
+    description: "Year-on-Year comparison of Girls Retention vs Infrastructure."
+    columns:
+      - name: state
+        tests:
+          - not_null
+      - name: academic_year
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['2023-24', '2024-25']
+
+  - name: yoy_ptr_and_teacher_allocation
+    description: "Year-on-Year comparison of PTR and Teacher Allocation."
+    columns:
+      - name: state
+        tests:
+          - not_null
+      - name: academic_year
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['2023-24', '2024-25']
+
+  - name: yoy_infra_score_vs_enrollment
+    description: "Year-on-Year comparison of 7-point Infrastructure Score vs Enrollment."
+    columns:
+      - name: state
+        tests:
+          - not_null
+      - name: academic_year
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['2023-24', '2024-25']
+
+  - name: yoy_regional_social_disparities
+    description: "Year-on-Year comparison of Regional and Social Disparities."
+    columns:
+      - name: state
+        tests:
+          - not_null
+      - name: academic_year
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['2023-24', '2024-25']
+
+  - name: yoy_socio_economic_and_health_proxies
+    description: "Year-on-Year comparison of Socio-Economic and Health Proxies."
+    columns:
+      - name: state
+        tests:
+          - not_null
+      - name: academic_year
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['2023-24', '2024-25']
+
+  - name: yoy_school_management_and_facility_impact
+    description: "Year-on-Year comparison of School Management and Facility Impact."
+    columns:
+      - name: state
+        tests:
+          - not_null
+      - name: academic_year
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['2023-24', '2024-25']
+
+  - name: yoy_girls_retention_aspirational_districts
+    description: "Year-on-Year comparison of Girls Retention in Aspirational Districts."
+    columns:
+      - name: state
+        tests:
+          - not_null
+      - name: academic_year
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['2023-24', '2024-25']
+
+  - name: yoy_transition_bottlenecks
+    description: "Year-on-Year comparison of Transition Bottlenecks."
+    columns:
+      - name: state
+        tests:
+          - not_null
+      - name: academic_year
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['2023-24', '2024-25']
+
+  - name: yoy_cwsn_enrolment_disability
+    description: "Year-on-Year comparison of CWSN Enrolment by Disability Type."
+    columns:
+      - name: state
+        tests:
+          - not_null
+      - name: academic_year
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['2023-24', '2024-25']
+
+  - name: yoy_age_grade_distortion
+    description: "Year-on-Year comparison of Age-Grade Distortion."
+    columns:
+      - name: state
+        tests:
+          - not_null
+      - name: academic_year
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['2023-24', '2024-25']

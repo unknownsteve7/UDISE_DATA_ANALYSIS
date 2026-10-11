@@ -1,0 +1,99 @@
+version: 2
+
+models:
+  - name: stg_profile1
+    description: "Standardized school administrative profiles for 2023-24 with cleaned locality and management labels."
+    columns:
+      - name: pseudocode
+        description: "Unique pseudo-identifier for each school"
+        tests:
+          - not_null
+          - unique
+      - name: state
+        description: "Name of the state or union territory"
+        tests:
+          - not_null
+      - name: district
+        description: "Name of the administrative district"
+        tests:
+          - not_null
+      - name: rural_urban_label
+        description: "Standardized classification: Rural or Urban"
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['Rural', 'Urban', 'Unknown']
+
+  - name: stg_profile1_2425
+    description: "Standardized school administrative profiles for 2024-25."
+    columns:
+      - name: pseudocode
+        description: "Unique pseudo-identifier for each school"
+        tests:
+          - not_null
+          - unique
+      - name: state
+        description: "Name of the state or union territory"
+        tests:
+          - not_null
+      - name: district
+        description: "Name of the district"
+        tests:
+          - not_null
+
+  - name: stg_facilities
+    description: "Standardized infrastructure indicators and computed 7-point infrastructure score for 2023-24."
+    columns:
+      - name: pseudocode
+        description: "Unique pseudo-identifier for each school"
+        tests:
+          - not_null
+          - unique
+      - name: infra_score
+        description: "Composite score from 0 to 7 based on core basic amenities"
+        tests:
+          - not_null
+
+  - name: stg_facilities_2425
+    description: "Standardized infrastructure indicators and computed 7-point infrastructure score for 2024-25."
+    columns:
+      - name: pseudocode
+        description: "Unique pseudo-identifier for each school"
+        tests:
+          - not_null
+          - unique
+
+  - name: stg_teachers
+    description: "Teacher headcounts and gender disaggregation for 2023-24."
+    columns:
+      - name: pseudocode
+        description: "Unique pseudo-identifier for each school"
+        tests:
+          - not_null
+          - unique
+
+  - name: stg_teachers_2425
+    description: "Teacher headcounts and gender disaggregation for 2024-25."
+    columns:
+      - name: pseudocode
+        description: "Unique pseudo-identifier for each school"
+        tests:
+          - not_null
+          - unique
+
+  - name: stg_enrollment1
+    description: "Grade-wise student enrollments for 2023-24 disaggregated by social categories and repeaters."
+    columns:
+      - name: pseudocode
+        description: "School identifier"
+        tests:
+          - not_null
+
+  - name: stg_enrollment1_2425
+    description: "Grade-wise student enrollments for 2024-25."
+    columns:
+      - name: pseudocode
+        description: "School identifier"
+        tests:
+          - not_null

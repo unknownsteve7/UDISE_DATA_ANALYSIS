@@ -517,11 +517,11 @@ with tab5:
            - Nationwide CSVs (~4 GB across 2023–24 and 2024–25 academic years).
            - 6 core entity files: `enrollment1`, `enrollment2`, `facilities`, `profile1`, `profile2`, `teachers`.
         2. **Big Data Processing (PySpark):**
-           - Batch schema inference, column harmonization, and columnar Parquet partitioning.
+           - Batch conversion from raw multi-GB CSVs to columnar Parquet format.
         3. **Relational Warehousing (DuckDB & PostgreSQL):**
-           - Zero-copy streaming ingestion from Parquet into PostgreSQL 16 `udise` database.
+           - Direct bulk ingestion from Parquet into PostgreSQL 16 database.
         4. **Analytics Engineering (dbt):**
-           - 21 production models materializing single-year metrics and Year-on-Year comparisons.
+           - Two-tier dbt architecture (10 staging views + 21 analytics marts) with 76 automated schema tests.
         5. **Semantic & Presentation Layer:**
            - Pre-aggregated dimensional marts (`powerbi_exports`) serving Streamlit and BI tools.
         """)

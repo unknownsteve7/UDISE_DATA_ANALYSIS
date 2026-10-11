@@ -1,4 +1,4 @@
--- Student Progression Funnel 
+-- Student Progression Funnel
 
 WITH student_progression AS (
     SELECT
@@ -8,7 +8,7 @@ WITH student_progression AS (
         SUM(c8_b + c8_g)   AS upper_primary_exit,
         SUM(c10_b + c10_g) AS secondary_exit,
         SUM(c12_b + c12_g) AS higher_secondary_exit
-    FROM enrollment1
+    FROM {{ ref('stg_enrollment1') }}
     WHERE item_group = 1
 )
 

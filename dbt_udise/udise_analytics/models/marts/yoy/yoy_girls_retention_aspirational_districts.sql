@@ -1,7 +1,4 @@
--- ============================================================
--- Year-on-Year: Girls Retention in Aspirational Districts
--- Focuses on Rural schools
--- ============================================================
+-- Year-on-Year: Girls Retention in Aspirational Districts (Rural Focus)
 
 WITH enroll_2324 AS (
     SELECT
@@ -12,8 +9,8 @@ WITH enroll_2324 AS (
         SUM(e.c9_b) AS c9_boys,
         SUM(e.c9_g) AS c9_girls,
         '2023-24' AS academic_year
-    FROM {{ source('public', 'profile1') }} p
-    JOIN {{ source('public', 'enrollment1') }} e ON p.pseudocode = e.pseudocode AND e.item_group = 1
+    FROM {{ ref('stg_profile1') }} p
+    JOIN {{ ref('stg_enrollment1') }} e ON p.pseudocode = e.pseudocode AND e.item_group = 1
     WHERE p.rural_urban = 1  -- Rural only
     GROUP BY 1,2,3,4,5
 ),
@@ -27,8 +24,8 @@ enroll_2425 AS (
         SUM(e.c9_b) AS c9_boys,
         SUM(e.c9_g) AS c9_girls,
         '2024-25' AS academic_year
-    FROM {{ source('public_2425', 'profile1_2425') }} p
-    JOIN {{ source('public_2425', 'enrollment1_2425') }} e ON p.pseudocode = e.pseudocode AND e.item_group = 1
+    FROM {{ ref('stg_profile1_2425') }} p
+    JOIN {{ ref('stg_enrollment1_2425') }} e ON p.pseudocode = e.pseudocode AND e.item_group = 1
     WHERE p.rural_urban = 1  -- Rural only
     GROUP BY 1,2,3,4,5
 )

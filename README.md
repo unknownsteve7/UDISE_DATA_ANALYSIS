@@ -30,17 +30,17 @@ flowchart TD
     end
 
     subgraph S2["2. Big Data Processing (PySpark)"]
-        B["convert_all_to_parquet.py<br/>Schema Harmonization & Parquet Partitioning"]
+        B["PySpark Batch Conversion<br/>High-throughput CSV to Columnar Parquet"]
     end
 
-    subgraph S3["3. Warehousing & Zero-Copy Staging"]
-        C["DuckDB Direct Engine<br/>Fast Attach & Bulk Load"]
+    subgraph S3["3. Warehousing & Staging"]
+        C["DuckDB Engine<br/>Direct Bulk Loading into PostgreSQL"]
         D[("PostgreSQL 16: udise<br/>12 Normalized Source Tables")]
     end
 
     subgraph S4["4. Analytics Engineering (dbt Core)"]
-        E["udise_analytics dbt DAG<br/>21 Models (11 Baseline + 10 YoY)"]
-        F["Data Quality Tests<br/>(not_null, integrity, documentation)"]
+        E["Two-Tier dbt DAG<br/>10 Staging Views → 21 Analytics Marts"]
+        F["Automated Schema Validation<br/>76 Tests: not_null, unique, accepted_values"]
     end
 
     subgraph S5["5. Semantic & Presentation Layer"]
@@ -90,7 +90,14 @@ flowchart TD
 
 ---
 
-## dbt Model Catalog (21 Production Models)
+## dbt Model Architecture (Staging & Analytics Marts)
+
+The analytical warehouse follows a two-tier dbt architecture with materialization strategies configured in `dbt_project.yml`:
+* **Staging Layer (`models/staging/` — Materialized as Views):** Cleans, casts, and standardizes raw 2023–24 and 2024–25 census sources (`stg_profile1`, `stg_profile1_2425`, `stg_facilities`, `stg_facilities_2425`, `stg_enrollment1`, `stg_enrollment1_2425`, `stg_enrollment2`, `stg_enrollment2_2425`, `stg_teachers`, `stg_teachers_2425`).
+* **Analytics Marts (`models/marts/` — Materialized as Tables):** Modular business logic consuming staging views via `ref()` for policy analysis and year-on-year comparisons.
+* **Schema Validation & Tests:** 76 automated dbt tests including `not_null`, `unique` primary key constraints, and `accepted_values` validation on academic years.
+
+### Analytics Marts Catalog (21 Production Models)
 
 | Domain | Baseline Model (2023–24) | Year-on-Year Model (2023–24 vs 2024–25) | Analytical Scope |
 | :--- | :--- | :--- | :--- |
@@ -128,25 +135,31 @@ UDISE/
 │       └── nfhs5_state_anemia_rates.csv         (State health benchmarks)
 ├── dbt_udise/
 │   └── udise_analytics/
-│       ├── dbt_project.yml         # dbt project configuration
-│       └── models/udise/           # 21 dbt analytical models & schemas
-│           ├── src_udise.yml       # Source table definitions
-│           └── udise_models.yml    # Model documentation and schema tests
+│       ├── dbt_project.yml         # Staging (views) & Marts (tables) configurations
+│       └── models/
+│           ├── staging/            # 10 Staging views cleaning & standardizing raw census tables
+│           │   ├── src_udise.yml   # Raw source definitions (public, public_2425)
+│           │   └── stg_udise.yml   # Staging documentation & validation tests
+│           └── marts/              # 21 Analytical marts
+│               ├── policy/         # 11 Baseline policy marts
+│               ├── yoy/            # 10 Year-on-Year comparative marts
+│               └── marts_models.yml# Marts documentation, constraints, & accepted_values tests
 ├── python/
 │   ├── UDISE_Data_Analysis.ipynb   # Exploratory PySpark & DuckDB analysis
-│   └── load_2425_to_postgres.py    # Automated DuckDB-to-PostgreSQL loading
+│   └── load_2425_to_postgres.py    # Automated DuckDB-to-PostgreSQL loading (os.getenv configured)
 ├── sql/
 │   └── enrollment1_analysis.sql    # Exploratory SQL analysis queries
+├── .env.example                    # Template environment variables for DB credentials
 └── Schema and Participant Brief/   # Official government schema manuals & PDFs
 ```
 
 ---
 
 ## Key Highlights & Takeaways
-    * Data Scale: 1.47 million schools analyzed across two full academic years.
-    * Zero-Copy Ingestion: Fast Parquet-to-Postgres transfer using DuckDB.
-    * Modular Engineering: 100% reproducible dbt DAG with validated tests.
-    * Actionable Outputs: Filterable priority district matrices for resource allocation and infrastructure planning.
+* **Data Scale:** 1.47 million schools analyzed across two full academic years (~4 GB raw census data).
+* **High-Throughput Ingestion:** DuckDB-to-PostgreSQL direct attach engine for fast bulk loading.
+* **Production dbt Architecture:** Two-tier DAG (`staging/` views $\to$ `marts/` tables) with 76 automated schema and constraint tests.
+* **Actionable Outputs:** Filterable priority district matrices for resource allocation and infrastructure planning.
 
 ---
 *Maintained for educational analytics, public policy evaluation, and evidence-based governance.*

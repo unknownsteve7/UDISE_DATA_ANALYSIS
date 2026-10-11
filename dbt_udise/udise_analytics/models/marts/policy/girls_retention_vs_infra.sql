@@ -5,7 +5,7 @@ WITH school_enrolment AS (
         pseudocode,
         SUM(c8_g) AS c8_girls,
         SUM(c9_g) AS c9_girls
-    FROM {{ source('public', 'enrollment1') }}
+    FROM {{ ref('stg_enrollment1') }}
     WHERE item_group = 1
     GROUP BY pseudocode
 ),
@@ -14,14 +14,14 @@ school_infra AS (
     SELECT
         pseudocode,
         CASE 
-            WHEN total_girls_func_toilet > 0 THEN 'Yes' 
+            WHEN has_girls_toilet = 1 THEN 'Yes' 
             ELSE 'No' 
         END AS has_functional_girls_toilet,
         CASE 
-            WHEN electricity_availability = 1 THEN 'Yes' 
+            WHEN has_electricity = 1 THEN 'Yes' 
             ELSE 'No' 
         END AS has_electricity
-    FROM {{ source('public', 'facilities') }}
+    FROM {{ ref('stg_facilities') }}
 ),
 
 school_profile AS (
@@ -33,7 +33,7 @@ school_profile AS (
         school_category,
         school_type,
         managment
-    FROM {{ source('public', 'profile1') }}
+    FROM {{ ref('stg_profile1') }}
 )
 
 SELECT
@@ -48,7 +48,6 @@ SELECT
     i.has_electricity,
     e.c8_girls,
     e.c9_girls,
-    -- Calculate transition/survival rate (Class 8 to 9) as a proxy
     CASE 
         WHEN e.c8_girls > 0 THEN ROUND((e.c9_girls::numeric / e.c8_girls::numeric) * 100, 2)
         ELSE NULL 
@@ -56,4 +55,4 @@ SELECT
 FROM school_profile p
 INNER JOIN school_enrolment e ON p.pseudocode = e.pseudocode
 LEFT JOIN school_infra i ON p.pseudocode = i.pseudocode
-WHERE e.c8_girls > 0 -- only include schools that have a cohort of girls in Class 8
+WHERE e.c8_girls > 0

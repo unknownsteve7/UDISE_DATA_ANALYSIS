@@ -1,5 +1,6 @@
 import os
 import time
+# pyrefly: ignore [missing-import]
 from pyspark.sql import SparkSession
 
 # Initialize Spark Session
@@ -10,9 +11,12 @@ spark = SparkSession.builder \
     .config("spark.executor.memory", "4g") \
     .getOrCreate()
 
-# Base directories
-source_dir = r"c:\Users\nagam\Final_Projects\UDISE\UDISE Education Dataset\UDISE 2024-25"
-target_dir = r"c:\Users\nagam\Final_Projects\UDISE\data\2024-25_parquet"
+# Base directories (dynamically resolved relative to repository root)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+raw_dataset_dir = os.path.join(BASE_DIR, "UDISE Education Dataset", "UDISE 2024-25")
+flat_data_dir = os.path.join(BASE_DIR, "data", "2024-25")
+source_dir = raw_dataset_dir if os.path.exists(raw_dataset_dir) else flat_data_dir
+target_dir = os.path.join(BASE_DIR, "data", "2024-25_parquet")
 
 # List of files with nested directories for 2024-25 UDISE dataset
 files_to_convert = [

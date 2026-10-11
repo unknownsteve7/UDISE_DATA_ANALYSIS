@@ -3,8 +3,8 @@
 WITH bpl_enrolment AS (
     SELECT
         pseudocode,
-        SUM(cpp_b + cpp_g + c1_b + c1_g + c2_b + c2_g + c3_b + c3_g + c4_b + c4_g + c5_b + c5_g + c6_b + c6_g + c7_b + c7_g + c8_b + c8_g + c9_b + c9_g + c10_b + c10_g + c11_b + c11_g + c12_b + c12_g) AS bpl_students
-    FROM {{ source('public', 'enrollment1') }}
+        SUM(total_students) AS bpl_students
+    FROM {{ ref('stg_enrollment1') }}
     WHERE item_group = 3 AND item_id = 13
     GROUP BY pseudocode
 ),
@@ -12,8 +12,8 @@ WITH bpl_enrolment AS (
 ews_enrolment AS (
     SELECT
         pseudocode,
-        SUM(cpp_b + cpp_g + c1_b + c1_g + c2_b + c2_g + c3_b + c3_g + c4_b + c4_g + c5_b + c5_g + c6_b + c6_g + c7_b + c7_g + c8_b + c8_g + c9_b + c9_g + c10_b + c10_g + c11_b + c11_g + c12_b + c12_g) AS ews_students
-    FROM {{ source('public', 'enrollment1') }}
+        SUM(total_students) AS ews_students
+    FROM {{ ref('stg_enrollment1') }}
     WHERE item_group = 10 AND item_id = 32
     GROUP BY pseudocode
 ),
@@ -21,8 +21,8 @@ ews_enrolment AS (
 total_enrolment AS (
     SELECT
         pseudocode,
-        SUM(cpp_b + cpp_g + c1_b + c1_g + c2_b + c2_g + c3_b + c3_g + c4_b + c4_g + c5_b + c5_g + c6_b + c6_g + c7_b + c7_g + c8_b + c8_g + c9_b + c9_g + c10_b + c10_g + c11_b + c11_g + c12_b + c12_g) AS total_students
-    FROM {{ source('public', 'enrollment1') }}
+        SUM(total_students) AS total_students
+    FROM {{ ref('stg_enrollment1') }}
     WHERE item_group = 1
     GROUP BY pseudocode
 ),
@@ -34,7 +34,7 @@ school_profile AS (
         district,
         block,
         managment
-    FROM {{ source('public', 'profile1') }}
+    FROM {{ ref('stg_profile1') }}
 ),
 
 nfhs_anemia AS (
@@ -79,7 +79,7 @@ nfhs_anemia AS (
             WHEN UPPER(state) = 'LADAKH' THEN 93.9
             ELSE NULL
         END AS child_anemia_rate_pct
-    FROM (SELECT DISTINCT state FROM {{ source('public', 'profile1') }}) s
+    FROM (SELECT DISTINCT state FROM {{ ref('stg_profile1') }}) s
 )
 
 SELECT
@@ -92,7 +92,6 @@ SELECT
     COALESCE(b.bpl_students, 0) AS bpl_students,
     COALESCE(w.ews_students, 0) AS ews_students,
     a.child_anemia_rate_pct,
-    -- Calculate percentages
     CASE 
         WHEN COALESCE(t.total_students, 0) > 0 THEN ROUND((COALESCE(b.bpl_students, 0)::numeric / t.total_students::numeric) * 100, 2)
         ELSE 0 

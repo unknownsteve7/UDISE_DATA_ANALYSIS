@@ -7,10 +7,20 @@ Creates tables:
   profile1_2425, profile2_2425, teachers_2425
 """
 
-import duckdb, time
+import os, time
+import duckdb
 
-BASE = "data/2024-25_parquet"
-PG   = "dbname=udise user=postgres password=1105 host=localhost"
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE = os.path.join(BASE_DIR, "data", "2024-25_parquet")
+
+PG_DB = os.getenv("PG_DATABASE", "udise")
+PG_USER = os.getenv("PG_USER", "postgres")
+PG_PASSWORD = os.getenv("PG_PASSWORD", "")
+PG_HOST = os.getenv("PG_HOST", "localhost")
+PG_PORT = os.getenv("PG_PORT", "5432")
+
+pg_auth = f"password={PG_PASSWORD}" if PG_PASSWORD else ""
+PG = f"dbname={PG_DB} user={PG_USER} {pg_auth} host={PG_HOST} port={PG_PORT}".strip()
 
 TABLES = [
     ("enroll1_parquet",  "enrollment1_2425"),

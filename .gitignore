@@ -7,3 +7,12 @@ powerbi_exports/
 UDISE Education Dataset/
 Schema and Participant Brief/
 dbt_udise/venv/
+
+# Environment variables & secrets
+.env
+.env.*
+!.env.example
+
+# Python bytecode & cache
+__pycache__/
+*.py[cod]

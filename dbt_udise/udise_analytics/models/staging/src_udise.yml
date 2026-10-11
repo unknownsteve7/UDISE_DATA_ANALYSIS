@@ -1,0 +1,40 @@
+version: 2
+
+sources:
+  # 2023-24 Academic Year Raw Census Tables
+  - name: public
+    database: udise
+    schema: public
+    description: "Raw school census tables for academic year 2023-24"
+    tables:
+      - name: enrollment1
+        description: "Grade-wise enrollment disaggregated by social category, CWSN, repeaters"
+      - name: enrollment2
+        description: "Age-grade distribution and medium of instruction enrollment"
+      - name: facilities
+        description: "School physical and digital amenities, sanitation, electricity, ICT labs"
+      - name: profile1
+        description: "School administrative profile, category, location, and management"
+      - name: profile2
+        description: "School incentives, inspections, and school management committee grants"
+      - name: teachers
+        description: "Teacher headcounts, gender disaggregation, and qualifications"
+
+  # 2024-25 Academic Year Raw Census Tables
+  - name: public_2425
+    database: udise
+    schema: public
+    description: "Raw school census tables for academic year 2024-25"
+    tables:
+      - name: enrollment1_2425
+        description: "2024-25 Grade-wise enrollment disaggregated data"
+      - name: enrollment2_2425
+        description: "2024-25 Age-grade distribution"
+      - name: facilities_2425
+        description: "2024-25 School infrastructure and sanitation facilities"
+      - name: profile1_2425
+        description: "2024-25 School profile, category, and administrative boundaries"
+      - name: profile2_2425
+        description: "2024-25 School grants and inspections"
+      - name: teachers_2425
+        description: "2024-25 Teacher staffing and qualifications"
